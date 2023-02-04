@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ mix('css/main.css') }}">
     
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 </head>
 <body class="text-gray-900 dark:bg-pumpkin-dark dark:text-white">
     @yield('header')
