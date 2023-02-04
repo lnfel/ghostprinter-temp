@@ -3,6 +3,27 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_expires.c>
+        # Enable expirations
+        ExpiresActive On
+        # Default directive
+        ExpiresDefault "access plus 1 month"
+
+        # My favicon
+        ExpiresByType image/x-icon "access plus 1 year"
+
+        # Images
+        ExpiresByType image/gif "access plus 1 month"
+        ExpiresByType image/png "access plus 1 month"
+        ExpiresByType image/jpg "access plus 1 month"
+        ExpiresByType image/jpeg "access plus 1 month"
+
+        # CSS
+        ExpiresByType text/css "access plus 1 month"
+        # Javascript
+        ExpiresByType application/javascript "access plus 1 year"
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header
@@ -14,8 +35,220 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
+    # Serve Cached Page If Available...
+    RewriteCond %{REQUEST_URI} ^/?$
+    RewriteCond %{DOCUMENT_ROOT}/page-cache/pc__index__pc.html -f
+    RewriteRule .? page-cache/pc__index__pc.html [L]
+    RewriteCond %{DOCUMENT_ROOT}/page-cache%{REQUEST_URI}.html -f
+    RewriteRule . page-cache%{REQUEST_URI}.html [L]
+    RewriteCond %{DOCUMENT_ROOT}/page-cache%{REQUEST_URI}.json -f
+    RewriteRule . page-cache%{REQUEST_URI}.json [L]
+
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|webp|png|jpg|ico|svg)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+
+    # Serve resources with the proper media types (f.k.a. MIME types).
+    # https://www.iana.org/assignments/media-types/media-types.xhtml
+
+    <IfModule mod_mime.c>
+
+      # Data interchange
+
+        # 2.2.x+
+
+        AddType text/xml                                    xml
+
+        # 2.2.x - 2.4.x
+
+        AddType 'application/json; charset=UTF-8'           json
+        AddType application/rss+xml                         rss
+
+        # 2.4.x+
+
+        AddType 'application/json; charset=UTF-8'           map
+
+      # JavaScript
+
+        # 2.2.x+
+
+        # See: https://html.spec.whatwg.org/multipage/scripting.html#scriptingLanguages.
+        AddType text/javascript                             js mjs
+
+
+      # Manifest files
+
+        # 2.2.x+
+
+        AddType application/manifest+json                   webmanifest
+        AddType text/cache-manifest                         appcache
+
+
+      # Media files
+
+        # 2.2.x - 2.4.x
+
+        AddType audio/mp4                                   f4a f4b m4a
+        AddType audio/ogg                                   oga ogg spx
+        AddType video/mp4                                   mp4 mp4v mpg4
+        AddType video/ogg                                   ogv
+        AddType video/webm                                  webm
+        AddType video/x-flv                                 flv
+
+        # 2.2.x+
+
+        AddType image/svg+xml                               svgz
+        AddType image/x-icon                                cur
+
+        # 2.4.x+
+
+        AddType image/webp                                  webp
+
+
+      # Web fonts
+
+        # 2.2.x - 2.4.x
+
+        AddType application/vnd.ms-fontobject               eot
+
+        # 2.2.x+
+
+        AddType font/woff                                   woff
+        AddType font/woff2                                  woff2
+        AddType font/ttf                                    ttf
+        AddType font/collection                             ttc
+        AddType font/otf                                    otf
+
+
+      # Other
+
+        # 2.2.x+
+
+        AddType text/vtt                                    vtt
+
+    </IfModule>
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Serve all resources labeled as `text/html` or `text/plain`
+    # with the media type `charset` parameter set to `utf-8`.
+    #
+    # https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
+
+    AddDefaultCharset utf-8
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Serve the following file types with the media type `charset`
+    # parameter set to `utf-8`.
+    #
+    # https://httpd.apache.org/docs/current/mod/mod_mime.html#addcharset
+
+    <IfModule mod_mime.c>
+        AddCharset utf-8 .appcache \
+                         .atom \
+                         .css \
+                         .js \
+                         .json \
+                         .manifest \
+                         .map \
+                         .mjs \
+                         .rdf \
+                         .rss \
+                         .vtt \
+                         .webmanifest \
+                         .xml
+    </IfModule>
+
+    # https://github.com/h5bp/server-configs-apache/blob/main/dist/.htaccess#L713-L795
+    # https://bytepursuits.com/apache-enabling-brotli-compression-with-gzip-deflate-fallback
+    # https://forum.laragon.org/topic/345/apache-deflate-gzip-module/6?page=1
+    # https://css-tricks.com/brotli-static-compression/
+
+    # Make sure apache's httpd.conf has the following enabled:
+    # - LoadModule deflate_module modules/mod_deflate.so
+    # - LoadModule filter_module modules/mod_filter.so
+
+    <IfModule mod_brotli.c>
+      # https://httpd.apache.org/docs/2.4/en/mod/mod_brotli.html
+      # https://github.com/kjdev/apache-mod-brotli
+
+      # Output filter
+      AddOutputFilterByType BROTLI_COMPRESS application/json application/javascript application/rss+xml application/vnd.ms-fontobject application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/opentype font/otf font/ttf image/svg+xml image/x-icon text/css text/html text/javascript text/plain text/xml
+    </IfModule>
+
+    <IfModule mod_deflate.c>
+      # Output filter
+      AddOutputFilterByType DEFLATE application/json application/javascript application/rss+xml application/vnd.ms-fontobject application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/opentype font/otf font/ttf image/svg+xml image/x-icon text/css text/html text/javascript text/plain text/xml
+
+      # Remove browser bugs (only needed for really old browsers)
+      BrowserMatch ^Mozilla/4 gzip-only-text/html
+      BrowserMatch ^Mozilla/4\.0[678] no-gzip
+      BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+      Header append Vary User-Agent
+    </IfModule>
+    
+    <IfModule mod_headers.c>
+      # https://stackoverflow.com/questions/36386993/how-do-i-implement-brotli-compression-in-apache
+      # https://drupal.stackexchange.com/questions/215639/how-to-modify-htaccess-to-serve-brotli-compressed-static-assets-over-gziped-one
+      
+      # BROTLI START -----------------------------------------------
+      # Serve brotli compressed CSS files if they exist
+      # and the client accepts brotli.
+      RewriteCond "%{HTTP:Accept-encoding}" "br"
+      RewriteCond "%{REQUEST_FILENAME}\.br" "-s"
+      RewriteRule "^(.*)\.css"              "$1\.css\.br" [QSA]
+
+      # Serve brotli compressed JS files if they exist
+      # and the client accepts brotli.
+      RewriteCond "%{HTTP:Accept-encoding}" "br"
+      RewriteCond "%{REQUEST_FILENAME}\.br" "-s"
+      RewriteRule "^(.*)\.js"               "$1\.js\.br" [QSA]
+
+      # Serve correct content types, and prevent double compression.
+      RewriteRule "\.css\.br$" "-" [T=text/css,E=no-brotli:1]
+      RewriteRule "\.js\.br$"  "-" [T=text/javascript,E=no-brotli:1]
+
+      <FilesMatch "(\.js\.br|\.css\.br)$">
+        # Serve correct encoding type.
+        Header append Content-Encoding br
+
+        # Force proxies to cache brotli &
+        # non-brotli css/js files separately.
+        Header append Vary Accept-Encoding
+      </FilesMatch>
+      # BROTLI END -----------------------------------------------
+
+      # Fallback to GZIP
+
+      # GZIP START -----------------------------------------------
+      # Serve gzip compressed CSS and JS files if they exist
+      # and the client accepts gzip.
+      RewriteCond "%{HTTP:Accept-encoding}" "gzip"
+      RewriteCond "%{REQUEST_FILENAME}\.gz" -s
+      RewriteRule "^(.*)\.(css|js)"         "$1\.$2\.gz" [QSA]
+
+      # Serve correct content types, and prevent mod_deflate double gzip.
+      RewriteRule "\.css\.gz$" "-" [T=text/css,E=no-gzip:1]
+      RewriteRule "\.js\.gz$"  "-" [T=text/javascript,E=no-gzip:1]
+
+      <FilesMatch "(\.js\.gz|\.css\.gz)$">
+        # Serve correct encoding type.
+        Header append Content-Encoding gzip
+
+        # Force proxies to cache gzipped &
+        # non-gzipped css/js files separately.
+        Header append Vary Accept-Encoding
+      </FilesMatch>
+      # GZIP END -----------------------------------------------
+    </IfModule>
+
+    # Do not bother compressing already pre-compressed content, mostly images
+    #SetOutputFilter BROTLI_COMPRESS
+    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp)$ no-brotli no-gzip dont-vary
 </IfModule>
