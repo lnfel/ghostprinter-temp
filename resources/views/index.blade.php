@@ -1,13 +1,13 @@
 @extends('layouts.guest')
 
-@section('title', 'Ghost Printer')
+@section('title', config('app.name'))
 
 @section('header')
     {{-- <header>
         <div class="container flex items-center justify-between mx-auto px-4 lg:px-8 py-6">
-            <a href="/" class="logo-link flex items-center gap-2 outline-none transition-all">
-                <img src="{{  Vite::asset('resources/images/logo-00.png') }}" alt="Ghost Printer Logo" class="w-14 h-14 md:w-16 md:h-16" width="60" height="60">
-                <span class="logo-title text-3xl md:text-4xl font-autorich-sans">Ghost Printer</span>
+            <a href="/" class="logo-link flex items-center gap-2 outline-none">
+                <img src="{{  Vite::asset('resources/images/logo-00.png') }}" alt="{{ config('app.name') }} Logo" class="w-14 h-14 md:w-16 md:h-16" width="60" height="60">
+                <span class="logo-title text-3xl md:text-4xl font-autorich-sans">{{ config('app.name') }}</span>
             </a>
 
             <nav class="flex items-center gap-2">
@@ -29,15 +29,17 @@
 @section('content')
     <main class="container min-h-screen flex flex-col items-center justify-center mx-auto px-4 lg:px-8 py-6">
         <div class="w-fit space-y-10">
-            <a href="/" class="logo-link flex items-center gap-2 outline-none transition-all">
-                <img src="{{  asset('images/logo-00.png') }}" alt="Ghost Printer Logo" class="w-16 h-16 md:w-20 md:h-20" width="80" height="80">
-                <span class="logo-title text-5xl md:text-6xl font-autorich-sans">Ghost Printer</span>
+            <a href="/" class="logo-link flex items-center gap-2 outline-none">
+                <img src="{{  asset('images/logo-00.png') }}" alt="{{ config('app.name') }} Logo" class="w-10 h-10 md:w-20 md:h-20" width="80" height="80">
+                <span class="logo-title font-autorich-sans text-3xl md:text-6xl border-b-2 border-transparent">
+                    {{ config('app.name') }}
+                </span>
             </a>
 
             <span class="block text-2xl text-center tracking-wider">Printing Soon...</span>
 
-            <div class="w-full flex items-center justify-between pt-20">
-                <div class="flex flex-col">
+            <div class="w-full md:flex items-center justify-between pt-20">
+                <div class="flex flex-col items-center md:items-start text-center">
                     <a href="/terms-and-conditions" class="w-fit dark:text-pumpkin-300 border-b-2 border-transparent hover:border-gray-900 focus:border-gray-900 focus:outline-none dark:hover:border-pumpkin-300 dark:focus:border-pumpkin-300">
                         Terms and Conditions
                     </a>
@@ -45,8 +47,8 @@
                         Policy
                     </a>
                 </div>
-                <div>
-                    <span class="dark:text-pumpkin-300 text-xs">Ghost Printer &copy; 2023</span>
+                <div class="text-center">
+                    <span class="dark:text-pumpkin-300 text-xs">{{ config('app.name') }} &copy; 2023</span>
                 </div>
             </div>
         </div>
