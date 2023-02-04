@@ -8,7 +8,21 @@
     <title>@yield('title')</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload font" href="{{ asset('fonts/autorich-sans/autorich_sans-webfont.woff2') }}" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <!-- Critical styles, font, layout -->
+    <style nonce="{{ csrf_token() }}">
+        /* https://www.myfonts.com/collections/typia-nesia-foundry */
+        /* https://creativemarket.com/neSia */
+        /* https://creativemarket.com/neSia/5116352-Campfire-Slab-Serif */
+        @font-face {
+            font-family: 'Auto Rich Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('/fonts/autorich-sans/autorich_sans-webfont.woff2') format('woff2');
+        }
+    </style>
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ mix('css/main.css') }}">
