@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('/resources/fonts/autorich_sans-webfont.woff2') format('woff2');
+    src: url('/fonts/autorich-sans/autorich_sans-webfont.woff2') format('woff2');
     /* unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; */
 }
 
@@ -12,11 +12,11 @@
 }
 
 .logo-title {
-    background: linear-gradient(120deg, #823c0c 48%, #ff7f02 48%);
+    background: linear-gradient(120deg, #823c0c 50%, #ff7f02 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-position: 50%;
-    background-size: 200% 200%;
+    background-position: 52%;
+    background-size: 400% 400%;
     transition: all .2s ease-in;
 }
 
@@ -27,10 +27,10 @@
 @media (prefers-color-scheme: dark) {
     .logo-title {
         /* background: linear-gradient(120deg, #ffffff 48%, #ffe5a5 48%); */
-        background: linear-gradient(145deg, #ffffff 50%, #ff7f02 50%);
+        background: linear-gradient(120deg, #ffffff 50%, #ff7f02 50%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-position: 50%;
+        background-position: 52%;
         background-size: 400% 400%;
         transition: all .2s ease-in;
     }

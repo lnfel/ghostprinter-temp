@@ -1,7 +1,15 @@
 {
     "/js/app.js": "/js/app.js?id=da58e3c203d8883f942cca72907c7296",
     "/css/app.css": "/css/app.css?id=85a2e05ffc5881b80b931f6c2fb99290",
-    "/css/main.css": "/css/main.css?id=7b5744b680512ae96497a0a91073d0bc",
+    "/css/main.css": "/css/main.css?id=d0f31923e44c5a1c62a97b0a9b46239c",
     "/images/logo-00.png": "/images/logo-00.png?id=3db1584aff08ef50731ed8116c9d7747",
-    "/images/logo-01.png": "/images/logo-01.png?id=4238bad0098d5d1b70aef10b88279771"
+    "/images/logo-01.png": "/images/logo-01.png?id=4238bad0098d5d1b70aef10b88279771",
+    "/fonts/autorich-sans/Autorich Sans Lite.otf": "/fonts/autorich-sans/Autorich Sans Lite.otf?id=2621f661bc5fca4f9485f589218244c6",
+    "/fonts/autorich-sans/Autorich Sans Lite.ttf": "/fonts/autorich-sans/Autorich Sans Lite.ttf?id=3a8e369d2e12716a707ebed086e4a122",
+    "/fonts/autorich-sans/Autorich Sans.otf": "/fonts/autorich-sans/Autorich Sans.otf?id=21de59929bfa8b62dc47a0d4d1fa138e",
+    "/fonts/autorich-sans/Autorich Sans.ttf": "/fonts/autorich-sans/Autorich Sans.ttf?id=6d0a788977c06b94c76b2a7832413b5c",
+    "/fonts/autorich-sans/autorich_sans-webfont.woff": "/fonts/autorich-sans/autorich_sans-webfont.woff?id=a25eb36ce9cbba98684e19624ccad3cf",
+    "/fonts/autorich-sans/autorich_sans-webfont.woff2": "/fonts/autorich-sans/autorich_sans-webfont.woff2?id=1984f128574bc23a36c19711bcdca138",
+    "/fonts/autorich-sans/autorich_sans_lite-webfont.woff": "/fonts/autorich-sans/autorich_sans_lite-webfont.woff?id=6422aefb1ca39e25be1edd9582023865",
+    "/fonts/autorich-sans/autorich_sans_lite-webfont.woff2": "/fonts/autorich-sans/autorich_sans_lite-webfont.woff2?id=5efc1faa9f6c519eef20b95ba8edb51a"
 }
