@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .copy('resources/css/main.css', 'public/css')
     .copyDirectory('resources/images', 'public/images')
+    .copyDirectory('resources/fonts', 'public/fonts')
     .version()
 
 mix.webpackConfig({
